@@ -11,7 +11,8 @@ class Login extends Component {
             <div>
                 <form onSubmit={e => {
                      e.preventDefault()
-                     this.props.login('poop', 'poooooop')
+                     this.props.login('poop', 'poooooop');
+                     this.props.history.push('/'); //send me home(most recent place);
                     }}>
                     <h2>Login:</h2>
                     <div>
