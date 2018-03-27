@@ -1,38 +1,65 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { login } from '../store'
-
-
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { login } from "../store";
 
 class Login extends Component {
-    render() {
-        return (
-            <div>
-                <form onSubmit={e => {
-                     e.preventDefault()
-                     this.props.login('poop', 'poooooop');
-                     this.props.history.push('/'); //send me home(most recent place);
-                    }}>
-                    <h2>Login:</h2>
-                    <div>
-                        <input type="email" placeholder="Email..." required />
-                    </div>
-                    <div>
-                        <input type="password" placeholder="Password..." required />
-                    </div>
-                    <button>Login</button>
+  constructor() {
+    super();
+    this.state = {
+      username: "",
+      password: ""
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-                </form>
-            </div>
-        )
-    }
-};
+  handleSubmit(e) {
+    const { username, password } = this.state;
+    e.preventDefault();
+    this.props.login(username, password);
+    this.props.history.push("/"); //send me home(most recent place);
+  }
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <h2>Login:</h2>
+          <div>
+            <input
+              type="email"
+              placeholder="Email..."
+              value={this.state.username}
+              onChange={e =>
+                this.setState({
+                  username: e.target.value
+                })
+              }
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Password..."
+              value={this.state.password}
+              onChange={e =>
+                this.setState({
+                  password: e.target.value
+                })
+              }
+              required
+            />
+          </div>
+          <button>Login</button>
+        </form>
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => ({
-    login: (username, password) => dispatch(login(username, password))
-})
+  login: (username, password) => dispatch(login(username, password))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
